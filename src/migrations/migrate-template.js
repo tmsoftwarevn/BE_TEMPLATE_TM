@@ -12,6 +12,9 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
       },
+      slug: {
+        type: Sequelize.STRING,
+      },
       image: {
         type: Sequelize.STRING,
       },
@@ -20,6 +23,12 @@ module.exports = {
       },
       description: {
         type: Sequelize.TEXT,
+      },
+      title:{
+        type: Sequelize.STRING,
+      },
+      meta_des: {
+        type: Sequelize.STRING,
       },
       id_nganh: {
         type: Sequelize.INTEGER

@@ -15,6 +15,15 @@ module.exports = {
       image: {
         type: Sequelize.STRING,
       },
+      slug: {
+        type: Sequelize.STRING,
+      },
+      title:{
+        type: Sequelize.STRING,
+      },
+      meta_des: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

@@ -15,7 +15,11 @@ module.exports = (sequelize, DataTypes) => {
     {
       name: DataTypes.STRING,
       image: DataTypes.STRING,
+      slug: DataTypes.STRING,
       link: DataTypes.STRING,
+      description: DataTypes.TEXT,
+      title: DataTypes.STRING,
+      meta_des: DataTypes.STRING,
       id_nganh: DataTypes.INTEGER,
     },
     {
@@ -24,5 +28,4 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   return template;
-
 };

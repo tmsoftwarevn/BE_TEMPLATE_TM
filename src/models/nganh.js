@@ -14,7 +14,10 @@ module.exports = (sequelize, DataTypes) => {
   nganh.init(
     {
       name: DataTypes.STRING,
-      image: DataTypes.STRING
+      image: DataTypes.STRING,
+      slug: DataTypes.STRING,
+      title: DataTypes.STRING,
+      meta_des: DataTypes.STRING,
     },
     {
       sequelize,

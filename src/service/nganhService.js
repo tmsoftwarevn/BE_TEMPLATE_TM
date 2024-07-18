@@ -7,8 +7,10 @@ const post_nganh = async (data) => {
   try {
     let c = await db.nganh.create({
       name: data.name,
-      image: data.image
-
+      image: data.image,
+      slug: data.slug,
+      title: data.title,
+      meta_des: data.meta_des
     });
 
     c = c.get({ plain: true });
@@ -25,8 +27,10 @@ const put_nganh = async (data, id) => {
     const u = await db.nganh.update(
       {
        name: data.name,
-       image: data.image
-
+       image: data.image,
+       slug: data.slug,
+       title: data.title,
+       meta_des: data.meta_des
       },
       {
         where: { id: id },

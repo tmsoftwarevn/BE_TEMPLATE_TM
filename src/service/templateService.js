@@ -8,7 +8,10 @@ const post_template = async (data) => {
       name: data.name,
       image: data.image,
       link: data.link,
+      slug: data.slug,
       description: data.description,
+      title: data.title,
+      meta_des: data.meta_des,
       id_nganh: data.id_nganh
     });
 
@@ -27,8 +30,11 @@ const put_template = async (data, id) => {
       {
         name: data.name,
         image: data.image,
+        slug: data.slug,
         link: data.link,
         description: data.description,
+        title: data.title,
+        meta_des: data.meta_des,
         id_nganh: data.id_nganh
       },
       {

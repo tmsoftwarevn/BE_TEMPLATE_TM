@@ -2,6 +2,7 @@ import express from "express";
 import nganhController from "../controllers/nganhController";
 import accountController from "../controllers/accountController";
 import templateController from "../controllers/templateController";
+import uploadfileController from "../controllers/uploadfileController";
 
 const router = express.Router();
 require("dotenv").config();
@@ -31,6 +32,9 @@ const initApiRouter = (app) => {
     accountController.checkPass,
     accountController.putPasswordUser
   );
+
+  //upload
+  router.post("/uploadImg", uploadfileController.postFileUploadImage);
 
   return app.use("/api/v1", router);
 };
