@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%=urlImage %></title>
+  </head>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    input[type="checkbox"] {
+      display: none;
+    }
+    .container {
+      margin: 0px;
+      background: #0e0e0e;
+    }
+    .container img {
+      transition: transform 0.25s ease;
+      display: block;
+      margin: auto;
+      width: 500px;
+      height: 100vh;
+    }
+    input[type="checkbox"]:checked ~ label > img {
+      transform: scale(1.1);
+      cursor: zoom-out;
+    }
+  </style>
+  <body>
+   
+    <div class="container">
+      <input type="checkbox" id="zoomCheck" />
+      <label for="zoomCheck">
+        <img src="/images/book/<%=urlImage %>" alt="image"/>
+      </label>
+    </div>
+  </body>
+</html>

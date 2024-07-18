@@ -1,0 +1,36 @@
+{
+  "name": "be_projectbook",
+  "version": "1.0.0",
+  "description": "mysql be_projectbook",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --exec babel-node src/server.js",
+    "build-src": "babel src -d build --copy-files",
+    "build": "node build/server.js"
+  },
+  "author": "HongPhong",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/cli": "^7.23.4",
+    "@babel/core": "^7.22.5",
+    "@babel/node": "^7.20.7",
+    "@babel/preset-env": "^7.22.5",
+    "@babel/traverse": "^7.23.7",
+    "bcryptjs": "2.4.3",
+    "body-parser": "1.19.1",
+    "cookie-parser": "1.4.6",
+    "cors": "2.8.5",
+    "dotenv": "16.0.3",
+    "ejs": "3.1.6",
+    "express": "4.18.2",
+    "express-fileupload": "1.4.0",
+    "express-session": "1.17.3",
+    "jsonwebtoken": "9.0.0",
+    "mysql2": "^3.4.3",
+    "nodemon": "^3.0.1",
+    "sequelize": "^6.32.1",
+    "sequelize-cli": "^6.6.1",
+    "uuid": "8.3.2"
+  }
+}
