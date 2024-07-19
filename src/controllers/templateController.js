@@ -38,7 +38,6 @@ const put_template = async (req, res) => {
   }
 };
 
-
 const get_all_template = async (req, res) => {
   try {
     let data = await templateService.get_all_template();
@@ -83,4 +82,58 @@ const delete_template = async (req, res) => {
     });
   }
 };
-export default { post_template, put_template, get_all_template, delete_template };
+
+const get_template_byid = async (req, res) => {
+  try {
+    let data = await templateService.get_template_byid(req.params.id);
+    if (data) {
+      return res.status(200).json({
+        data: data,
+        EC: 1,
+      });
+    } else {
+      return res.status(400).json({
+        message: "Có lỗi",
+        EC: -1,
+      });
+    }
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({
+      EC: -1,
+      message: "Wrong something",
+    });
+  }
+};
+
+const get_detail_template_byslug = async(req, res)=>{
+  try {
+    let data = await templateService.get_detail_template_byslug(req.params.slug);
+    if (data) {
+      return res.status(200).json({
+        data: data,
+        EC: 1,
+      });
+    } else {
+      return res.status(400).json({
+        message: "Có lỗi",
+        EC: -1,
+      });
+    }
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({
+      EC: -1,
+      message: "Wrong something",
+    });
+  }
+}
+
+export default {
+  post_template,
+  put_template,
+  get_template_byid,
+  get_all_template,
+  delete_template,
+  get_detail_template_byslug
+};

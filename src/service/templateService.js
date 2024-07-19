@@ -1,3 +1,4 @@
+import { where } from "sequelize";
 
 const db = require("../models");
 
@@ -12,7 +13,7 @@ const post_template = async (data) => {
       description: data.description,
       title: data.title,
       meta_des: data.meta_des,
-      id_nganh: data.id_nganh
+      id_nganh: data.id_nganh,
     });
 
     c = c.get({ plain: true });
@@ -22,7 +23,6 @@ const post_template = async (data) => {
     console.log(error);
   }
 };
-
 
 const put_template = async (data, id) => {
   try {
@@ -35,7 +35,7 @@ const put_template = async (data, id) => {
         description: data.description,
         title: data.title,
         meta_des: data.meta_des,
-        id_nganh: data.id_nganh
+        id_nganh: data.id_nganh,
       },
       {
         where: { id: id },
@@ -46,23 +46,22 @@ const put_template = async (data, id) => {
       return {
         DT: "update success",
       };
-      
   } catch (error) {
     console.log(error);
   }
 };
 
-const get_all_template = async ()=>{
+const get_all_template = async () => {
   try {
     let g = await db.template.findAll({
-     
+      order: [["createdAt", "desc"]],
       raw: true,
     });
     return g;
   } catch (error) {
     console.log(error);
   }
-}
+};
 const delete_template = async (id) => {
   try {
     let del = await db.template.destroy({
@@ -74,4 +73,37 @@ const delete_template = async (id) => {
   }
 };
 
-export default { post_template, put_template , get_all_template, delete_template};
+const get_template_byid = async (id) => {
+  try {
+    let g = await db.template.findAll({
+      order: [["createdAt", "desc"]],
+      where: { id_nganh: id },
+      raw: true,
+    });
+    return g;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const get_detail_template_byslug = async (slug) => {
+  try {
+    
+    let g = await db.template.findOne({
+      where: { slug: slug },
+      raw: true,
+    });
+    return g;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export default {
+  post_template,
+  put_template,
+  get_all_template,
+  delete_template,
+  get_template_byid,
+  get_detail_template_byslug,
+};

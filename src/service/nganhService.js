@@ -50,7 +50,7 @@ const put_nganh = async (data, id) => {
 const get_all_nganh = async ()=>{
   try {
     let g = await db.nganh.findAll({
-     
+      order: [["createdAt", "desc"]],
       raw: true,
     });
     return g;

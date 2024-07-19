@@ -23,6 +23,8 @@ const initApiRouter = (app) => {
   router.put("/template/:id", templateController.put_template);
   router.get("/template", templateController.get_all_template);
   router.delete("/template/:id", templateController.delete_template);
+  router.get("/template_byid/:id", templateController.get_template_byid);
+  router.get("/detail_template/:slug", templateController.get_detail_template_byslug);
 
   //account
   // router.post("/register", accountController.postRegister);
