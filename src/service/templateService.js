@@ -1,4 +1,4 @@
-import { where } from "sequelize";
+import { Op, where } from "sequelize";
 
 const db = require("../models");
 
@@ -63,7 +63,7 @@ const get_all_template = async () => {
   }
 };
 
-const get_all_template_paginate = async(page, limit)=>{
+const get_all_template_paginate = async (page, limit) => {
   try {
     page = page ? +page : 1;
     limit = +limit;
@@ -81,36 +81,36 @@ const get_all_template_paginate = async(page, limit)=>{
       raw: true,
     });
 
-    return {list, total};
+    return { list, total };
   } catch (error) {
     console.log(error);
-    return null
+    return null;
   }
-}
+};
 
-const get_template_byIdNganh_paginate = async(page, limit, id)=>{
+const get_template_byIdNganh_paginate = async (page, limit, id) => {
   try {
     page = page ? +page : 1;
     limit = +limit;
 
     let total = await db.template.count({
-      where : { id_nganh: id  }
+      where: { id_nganh: id },
     });
 
     let list = await db.template.findAll({
       offset: (page - 1) * limit,
       limit: limit,
-      where : { id_nganh: id  },
+      where: { id_nganh: id },
       order: [["createdAt", "desc"]],
       raw: true,
     });
 
-    return {list, total};
+    return { list, total };
   } catch (error) {
     console.log(error);
-    return null
+    return null;
   }
-}
+};
 
 const delete_template = async (id) => {
   try {
@@ -138,7 +138,6 @@ const get_template_byidNganh = async (id) => {
 
 const get_detail_template_byslug = async (slug) => {
   try {
-    
     let g = await db.template.findOne({
       where: { slug: slug },
       raw: true,
@@ -149,10 +148,10 @@ const get_detail_template_byslug = async (slug) => {
   }
 };
 
-const get_template_relate_idNganh = async (id) =>{
+const get_template_relate_idNganh = async (id) => {
   try {
     let g = await db.template.findAll({
-      limit: 8,   //  lấy 8 template
+      limit: 8, //  lấy 8 template
       order: [["createdAt", "desc"]],
       where: { id_nganh: id },
       raw: true,
@@ -161,8 +160,35 @@ const get_template_relate_idNganh = async (id) =>{
   } catch (error) {
     console.log(error);
   }
+};
 
-}
+const get_template_bySearch = async (page, limit, string) => {
+  try {
+    page = page ? +page : 1;
+    limit = +limit;
+
+    let total = await db.template.count({
+      where: {
+        name: { [Op.like]: `%${string}%` },
+      },
+    });
+
+    let list = await db.template.findAll({
+      offset: (page - 1) * limit,
+      limit: limit,
+      where: {
+        name: { [Op.like]: `%${string}%` },
+      },
+      order: [["createdAt", "desc"]],
+      raw: true,
+    });
+
+    return { list, total };
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
 
 export default {
   post_template,
@@ -173,5 +199,6 @@ export default {
   get_detail_template_byslug,
   get_all_template_paginate,
   get_template_byIdNganh_paginate,
-  get_template_relate_idNganh
+  get_template_relate_idNganh,
+  get_template_bySearch
 };

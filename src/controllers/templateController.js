@@ -213,6 +213,34 @@ const get_template_byIdNganh_paginate = async (req, res) => {
   }
 };
 
+const get_template_bySearch = async (req, res) => {
+  try {
+    const { page, limit, s } = req.query;
+    let data = await templateService.get_template_bySearch(page, limit, s);
+    if (data && data.list) {
+      return res.status(200).json({
+        EC: 1,
+        data: {
+          page: page,
+          limit: limit,
+          totalPage: Math.ceil(+data.total / +limit),
+          total: data.total,
+        },
+        list: data.list,
+      });
+    }
+    return res.status(400).json({
+      EC: -1,
+      message: "fail fetch",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Err server",
+      EC: -1,
+    });
+  }
+};
 
 export default {
   post_template,
@@ -223,6 +251,6 @@ export default {
   get_detail_template_byslug,
   get_all_template_paginate,
   get_template_byIdNganh_paginate,
-  get_template_relate_idNganh
-
+  get_template_relate_idNganh,
+  get_template_bySearch
 };

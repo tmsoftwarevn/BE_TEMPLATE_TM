@@ -31,6 +31,8 @@ const initApiRouter = (app) => {
   router.get("/paginate_template_byidnganh/:id", templateController.get_template_byIdNganh_paginate);
   router.get("/relate_template/:id", templateController.get_template_relate_idNganh);
 
+  router.get("/paginate_template_search", templateController.get_template_bySearch);
+
 
   //account
   // router.post("/register", accountController.postRegister);
