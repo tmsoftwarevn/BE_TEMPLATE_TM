@@ -62,6 +62,56 @@ const get_all_template = async () => {
     console.log(error);
   }
 };
+
+const get_all_template_paginate = async(page, limit)=>{
+  try {
+    page = page ? +page : 1;
+    limit = +limit;
+
+    let total = await db.template.count({
+      offset: (page - 1) * limit,
+      limit: limit,
+    });
+
+    let list = await db.template.findAll({
+      offset: (page - 1) * limit,
+      limit: limit,
+
+      order: [["createdAt", "desc"]],
+      raw: true,
+    });
+
+    return {list, total};
+  } catch (error) {
+    console.log(error);
+    return null
+  }
+}
+
+const get_template_byIdNganh_paginate = async(page, limit, id)=>{
+  try {
+    page = page ? +page : 1;
+    limit = +limit;
+
+    let total = await db.template.count({
+      where : { id_nganh: id  }
+    });
+
+    let list = await db.template.findAll({
+      offset: (page - 1) * limit,
+      limit: limit,
+      where : { id_nganh: id  },
+      order: [["createdAt", "desc"]],
+      raw: true,
+    });
+
+    return {list, total};
+  } catch (error) {
+    console.log(error);
+    return null
+  }
+}
+
 const delete_template = async (id) => {
   try {
     let del = await db.template.destroy({
@@ -73,7 +123,7 @@ const delete_template = async (id) => {
   }
 };
 
-const get_template_byid = async (id) => {
+const get_template_byidNganh = async (id) => {
   try {
     let g = await db.template.findAll({
       order: [["createdAt", "desc"]],
@@ -99,11 +149,29 @@ const get_detail_template_byslug = async (slug) => {
   }
 };
 
+const get_template_relate_idNganh = async (id) =>{
+  try {
+    let g = await db.template.findAll({
+      limit: 8,   //  lấy 8 template
+      order: [["createdAt", "desc"]],
+      where: { id_nganh: id },
+      raw: true,
+    });
+    return g;
+  } catch (error) {
+    console.log(error);
+  }
+
+}
+
 export default {
   post_template,
   put_template,
   get_all_template,
   delete_template,
-  get_template_byid,
+  get_template_byidNganh,
   get_detail_template_byslug,
+  get_all_template_paginate,
+  get_template_byIdNganh_paginate,
+  get_template_relate_idNganh
 };

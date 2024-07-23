@@ -83,4 +83,26 @@ const delete_nganh = async (req, res) => {
     });
   }
 };
-export default { post_nganh, put_nganh, get_all_nganh, delete_nganh };
+
+const get_nameNganh_fromId = async(req, res) =>{
+  try {
+    let data = await nganhService.get_nameNganh_fromId(req.params.id);
+    if (data) {
+      return res.status(200).json({
+        data: data,
+        EC: 1,
+      });
+    } else {
+      return res.status(400).json({
+        message: "Có lỗi",
+        EC: -1,
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      EC: -1,
+      message: "Wrong something",
+    });
+  }
+}
+export default { post_nganh, put_nganh, get_all_nganh, delete_nganh , get_nameNganh_fromId};

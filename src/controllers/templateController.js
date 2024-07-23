@@ -85,7 +85,7 @@ const delete_template = async (req, res) => {
 
 const get_template_byid = async (req, res) => {
   try {
-    let data = await templateService.get_template_byid(req.params.id);
+    let data = await templateService.get_template_byidNganh(req.params.id);
     if (data) {
       return res.status(200).json({
         data: data,
@@ -98,7 +98,7 @@ const get_template_byid = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return res.status(500).json({
       EC: -1,
       message: "Wrong something",
@@ -106,9 +106,10 @@ const get_template_byid = async (req, res) => {
   }
 };
 
-const get_detail_template_byslug = async(req, res)=>{
+
+const get_template_relate_idNganh = async (req, res) => {
   try {
-    let data = await templateService.get_detail_template_byslug(req.params.slug);
+    let data = await templateService.get_template_relate_idNganh(req.params.id);
     if (data) {
       return res.status(200).json({
         data: data,
@@ -121,13 +122,97 @@ const get_detail_template_byslug = async(req, res)=>{
       });
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return res.status(500).json({
       EC: -1,
       message: "Wrong something",
     });
   }
-}
+};
+
+const get_detail_template_byslug = async (req, res) => {
+  try {
+    let data = await templateService.get_detail_template_byslug(
+      req.params.slug
+    );
+    if (data) {
+      return res.status(200).json({
+        data: data,
+        EC: 1,
+      });
+    } else {
+      return res.status(400).json({
+        message: "Có lỗi",
+        EC: -1,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      EC: -1,
+      message: "Wrong something",
+    });
+  }
+};
+
+const get_all_template_paginate = async (req, res) => {
+  try {
+    const { page, limit } = req.query;
+    let data = await templateService.get_all_template_paginate(page, limit);
+    if (data && data.list) {
+      return res.status(200).json({
+        EC: 1,
+        data: {
+          page: page,
+          limit: limit,
+          totalPage: Math.ceil(+data.total / +limit),
+          total: data.total,
+        },
+        list: data.list,
+      });
+    }
+    return res.status(400).json({
+      EC: -1,
+      message: "fail fetch",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Err server",
+      EC: -1,
+    });
+  }
+};
+
+const get_template_byIdNganh_paginate = async (req, res) => {
+  try {
+    const { page, limit } = req.query;
+    let data = await templateService.get_template_byIdNganh_paginate(page, limit, req.params.id);
+    if (data && data.list) {
+      return res.status(200).json({
+        EC: 1,
+        data: {
+          page: page,
+          limit: limit,
+          totalPage: Math.ceil(+data.total / +limit),
+          total: data.total,
+        },
+        list: data.list,
+      });
+    }
+    return res.status(400).json({
+      EC: -1,
+      message: "fail fetch",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Err server",
+      EC: -1,
+    });
+  }
+};
+
 
 export default {
   post_template,
@@ -135,5 +220,9 @@ export default {
   get_template_byid,
   get_all_template,
   delete_template,
-  get_detail_template_byslug
+  get_detail_template_byslug,
+  get_all_template_paginate,
+  get_template_byIdNganh_paginate,
+  get_template_relate_idNganh
+
 };

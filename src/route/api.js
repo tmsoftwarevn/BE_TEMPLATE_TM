@@ -16,6 +16,7 @@ const initApiRouter = (app) => {
   router.post("/nganh", nganhController.post_nganh);
   router.put("/nganh/:id", nganhController.put_nganh);
   router.get("/nganh", nganhController.get_all_nganh);
+  router.get("/name_nganh/:id", nganhController.get_nameNganh_fromId);
   router.delete("/nganh/:id", nganhController.delete_nganh);
 
   // template
@@ -25,6 +26,11 @@ const initApiRouter = (app) => {
   router.delete("/template/:id", templateController.delete_template);
   router.get("/template_byid/:id", templateController.get_template_byid);
   router.get("/detail_template/:slug", templateController.get_detail_template_byslug);
+
+  router.get("/paginate_template", templateController.get_all_template_paginate);
+  router.get("/paginate_template_byidnganh/:id", templateController.get_template_byIdNganh_paginate);
+  router.get("/relate_template/:id", templateController.get_template_relate_idNganh);
+
 
   //account
   // router.post("/register", accountController.postRegister);

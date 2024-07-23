@@ -69,4 +69,15 @@ const delete_nganh = async (id) => {
   }
 };
 
-export default { post_nganh, put_nganh , get_all_nganh, delete_nganh};
+const get_nameNganh_fromId = async(id)=>{
+  try {
+    let name = await db.nganh.findOne({
+      where: {id: id},
+      raw: true,
+    });
+    return name;
+  } catch (error) {
+    console.log(error)
+  }
+}
+export default { post_nganh, put_nganh , get_all_nganh, delete_nganh, get_nameNganh_fromId};
