@@ -105,4 +105,23 @@ const get_nameNganh_fromId = async(req, res) =>{
     });
   }
 }
-export default { post_nganh, put_nganh, get_all_nganh, delete_nganh , get_nameNganh_fromId};
+
+const get_nganh_parent_home = async(req, res) =>{
+  try {
+    let data = await nganhService.get_nganh_parent_home();
+    if(data.EC === 1){
+      return res.status(200).json({
+        EC: 1,
+        data: data.data
+      })
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      EC: -1,
+      message: 'err server'
+    })
+  }
+}
+
+export default { get_nganh_parent_home,post_nganh, put_nganh, get_all_nganh, delete_nganh , get_nameNganh_fromId};

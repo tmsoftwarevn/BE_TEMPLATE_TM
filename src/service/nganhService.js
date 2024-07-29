@@ -1,5 +1,5 @@
 
-
+import { literal } from "sequelize";
 const db = require("../models");
 
 const post_nganh = async (data) => {
@@ -10,7 +10,9 @@ const post_nganh = async (data) => {
       image: data.image,
       slug: data.slug,
       title: data.title,
-      meta_des: data.meta_des
+      meta_des: data.meta_des,
+      parentId: data.parentId
+      
     });
 
     c = c.get({ plain: true });
@@ -30,7 +32,8 @@ const put_nganh = async (data, id) => {
        image: data.image,
        slug: data.slug,
        title: data.title,
-       meta_des: data.meta_des
+       meta_des: data.meta_des,
+       parentId: data.parentId
       },
       {
         where: { id: id },
@@ -80,4 +83,49 @@ const get_nameNganh_fromId = async(id)=>{
     console.log(error)
   }
 }
-export default { post_nganh, put_nganh , get_all_nganh, delete_nganh, get_nameNganh_fromId};
+
+// custom menu
+const get_nganh_parent_home = async() =>{
+  try {
+    let list = await db.nganh.findAll({
+      attributes: {
+        include: [
+          [literal('CAST(id AS CHAR)'), 'value'],        // Alias 'id' to 'key'
+          ['name', 'label'], // Alias 'category' to 'label'
+          "parentId",
+          "image",
+          "slug"
+        ],
+       
+      },
+      raw: true,
+    });
+    
+    let custom = getNestedChildren(list,0);
+    return {
+      EC: 1,
+      data: custom
+    }
+
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+const getNestedChildren = (arr, parentId) => {
+  var out = []
+  for (var i in arr) {
+    if (arr[i].parentId == parentId) {
+      var children = getNestedChildren(arr, arr[i].id)
+
+      if (children.length) {
+        arr[i].children = children
+      }
+      out.push(arr[i])
+    }
+  }
+  return out
+}
+
+export default {get_nganh_parent_home, post_nganh, put_nganh , get_all_nganh, delete_nganh, get_nameNganh_fromId};

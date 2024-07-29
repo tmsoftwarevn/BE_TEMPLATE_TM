@@ -24,6 +24,9 @@ module.exports = {
       meta_des: {
         type: Sequelize.STRING,
       },
+      parentId: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

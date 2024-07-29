@@ -19,6 +19,9 @@ const initApiRouter = (app) => {
   router.get("/name_nganh/:id", nganhController.get_nameNganh_fromId);
   router.delete("/nganh/:id", nganhController.delete_nganh);
 
+  router.get("/nganh_parent", nganhController.get_nganh_parent_home);
+
+
   // template
   router.post("/template", templateController.post_template);
   router.put("/template/:id", templateController.put_template);

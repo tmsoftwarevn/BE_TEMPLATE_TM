@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       slug: DataTypes.STRING,
       title: DataTypes.STRING,
       meta_des: DataTypes.STRING,
+      parentId: DataTypes.INTEGER,
     },
     {
       sequelize,
