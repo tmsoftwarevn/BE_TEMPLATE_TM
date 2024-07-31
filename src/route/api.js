@@ -18,8 +18,10 @@ const initApiRouter = (app) => {
   router.get("/nganh", nganhController.get_all_nganh);
   router.get("/name_nganh/:id", nganhController.get_nameNganh_fromId);
   router.delete("/nganh/:id", nganhController.delete_nganh);
-
+  //custom list menu (con)
   router.get("/nganh_parent", nganhController.get_nganh_parent_home);
+  router.get("/listchildnganh/:id", nganhController.get_idChildren_from_parent);
+
 
 
   // template

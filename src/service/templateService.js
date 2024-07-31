@@ -88,6 +88,7 @@ const get_all_template_paginate = async (page, limit) => {
   }
 };
 
+//////// call
 const get_template_byIdNganh_paginate = async (page, limit, id) => {
   try {
     page = page ? +page : 1;
@@ -136,6 +137,19 @@ const get_template_byidNganh = async (id) => {
   }
 };
 
+const get_list_by_arrId = async(arr)=>{
+  try {
+    let g = await db.template.findAll({
+      order: [["createdAt", "desc"]],
+      where: { id: arr },
+      raw: true,
+    });
+    return g;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 const get_detail_template_byslug = async (slug) => {
   try {
     let g = await db.template.findOne({
@@ -150,13 +164,41 @@ const get_detail_template_byslug = async (slug) => {
 
 const get_template_relate_idNganh = async (id) => {
   try {
-    let g = await db.template.findAll({
-      limit: 8, //  lấy 8 template
-      order: [["createdAt", "desc"]],
-      where: { id_nganh: id },
+    // let g = await db.template.findAll({
+    //   limit: 8, //  lấy 8 template
+    //   order: [["createdAt", "desc"]],
+    //   where: { id_nganh: id },
+    //   raw: true,
+    // });
+    // return g;
+
+    /////   tìm id cha g.parentId
+    let g = await db.nganh.findOne({
+      where: { id: id },
       raw: true,
     });
-    return g;
+    // tìm tất cả con theo id cha
+
+    let a = await db.nganh.findAll({
+      where: { parentId: g.parentId },
+      raw: true,
+    });
+    // arr con id , custom để tìm kiếm: [1,2]
+    let idList = [];
+
+    a.map((item, idx) => {
+      idList.push(item.id);
+    });
+  
+    ////
+    let list = await db.template.findAll({
+      limit: 8,
+      order: [["createdAt", "desc"]],
+      where: { id_nganh: idList },
+      raw: true,
+    });
+    return list
+
   } catch (error) {
     console.log(error);
   }
@@ -190,6 +232,8 @@ const get_template_bySearch = async (page, limit, string) => {
   }
 };
 
+
+
 export default {
   post_template,
   put_template,
@@ -198,7 +242,9 @@ export default {
   get_template_byidNganh,
   get_detail_template_byslug,
   get_all_template_paginate,
+
   get_template_byIdNganh_paginate,
   get_template_relate_idNganh,
-  get_template_bySearch
+  get_template_bySearch,
+  get_list_by_arrId
 };

@@ -38,7 +38,6 @@ const put_nganh = async (req, res) => {
   }
 };
 
-
 const get_all_nganh = async (req, res) => {
   try {
     let data = await nganhService.get_all_nganh();
@@ -84,7 +83,7 @@ const delete_nganh = async (req, res) => {
   }
 };
 
-const get_nameNganh_fromId = async(req, res) =>{
+const get_nameNganh_fromId = async (req, res) => {
   try {
     let data = await nganhService.get_nameNganh_fromId(req.params.id);
     if (data) {
@@ -104,24 +103,60 @@ const get_nameNganh_fromId = async(req, res) =>{
       message: "Wrong something",
     });
   }
-}
+};
 
-const get_nganh_parent_home = async(req, res) =>{
+const get_nganh_parent_home = async (req, res) => {
   try {
     let data = await nganhService.get_nganh_parent_home();
-    if(data.EC === 1){
+    if (data.EC === 1) {
       return res.status(200).json({
         EC: 1,
-        data: data.data
-      })
+        data: data.data,
+      });
     }
   } catch (error) {
     console.log(error);
     return res.status(500).json({
       EC: -1,
-      message: 'err server'
-    })
+      message: "err server",
+    });
+  }
+};
+
+const get_idChildren_from_parent = async(req, res) =>{
+  try {
+    const { page, limit } = req.query;
+    let data = await nganhService.get_idChildren_from_parent(page, limit, req.params.id);
+    if (data && data.list) {
+      return res.status(200).json({
+        EC: 1,
+        data: {
+          page: page,
+          limit: limit,
+          totalPage: Math.ceil(+data.total / +limit),
+          total: data.total,
+        },
+        list: data.list,
+      });
+    }
+    return res.status(400).json({
+      EC: -1,
+      message: "fail fetch",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Err server",
+      EC: -1,
+    });
   }
 }
-
-export default { get_nganh_parent_home,post_nganh, put_nganh, get_all_nganh, delete_nganh , get_nameNganh_fromId};
+export default {
+  get_nganh_parent_home,
+  post_nganh,
+  put_nganh,
+  get_all_nganh,
+  delete_nganh,
+  get_nameNganh_fromId,
+  get_idChildren_from_parent
+};

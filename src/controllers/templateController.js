@@ -169,6 +169,7 @@ const get_all_template_paginate = async (req, res) => {
           total: data.total,
         },
         list: data.list,
+        
       });
     }
     return res.status(400).json({
