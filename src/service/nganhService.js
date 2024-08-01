@@ -76,19 +76,29 @@ const get_nameNganh_fromId = async (id) => {
     //   raw: true,
     // });
     // return name;
+    
     let f = await db.template.findOne({
-      where: { id_nganh: id },
+      where: { id: id },
       raw: true,
     });
-    console.log("fffff", f);
+    //console.log('ffff', f)
+
     if (f.id) {
-      let name = await db.nganh.findAll({
-        where: { parentId: f.id },
+      let n = await db.nganh.findOne({
+        where: { id: f.id_nganh },
         raw: true,
       });
+      let name = await db.nganh.findOne({
+        where: { id: n.parentId },
+        raw: true,
+      });
+
+      //console.log("nnnn", name);
       return name;
     }
-    return null
+
+    return null;
+
   } catch (error) {
     console.log(error);
   }
