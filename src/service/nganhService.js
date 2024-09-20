@@ -186,11 +186,11 @@ const get_idChildren_from_parent = async (page, limit, id) => {
 };
 
 export default {
-  get_nganh_parent_home,
   post_nganh,
   put_nganh,
   get_all_nganh,
   delete_nganh,
+  get_nganh_parent_home,
   get_nameNganh_fromId,
   get_idChildren_from_parent,
 };
